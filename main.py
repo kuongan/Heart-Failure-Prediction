@@ -37,8 +37,8 @@ from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_sco
 app = FastAPI()
 
 # Dummy data paths
-DATA_FOLDER = r"C:\Edisk\tailieusinhvien\hk5\data_mining\backend\data"
-MODEL_FOLDER = r"C:\Edisk\tailieusinhvien\hk5\data_mining\backend\models"
+DATA_FOLDER = "/home/nguyen-minh-hieu/data_mining/Heart-Failure-Prediction/data"
+MODEL_FOLDER = "/home/nguyen-minh-hieu/data_mining/Heart-Failure-Prediction/models"
 os.makedirs(DATA_FOLDER, exist_ok=True)
 os.makedirs(MODEL_FOLDER, exist_ok=True)
 DEVICE = "cpu"  # Thiết bị cho Tensor
@@ -117,9 +117,12 @@ class Net(nn.Module):
         return x
 #xu ly du lieu
 
-df = pd.read_csv(r'C:\Edisk\tailieusinhvien\hk5\data_mining\backend\data\heart.csv', skipinitialspace=True)
-
-
+df = pd.read_csv('/home/nguyen-minh-hieu/data_mining/Heart-Failure-Prediction/data/heart.csv', skipinitialspace=True)
+df_ml=df.copy()
+df_ml = pd.get_dummies(df_ml, drop_first=True)
+X = df_ml.drop(["HeartDisease"], axis=1)
+y = df_ml["HeartDisease"]
+X_train_ml, X_test_ml, y_train_ml, y_test_ml = train_test_split(X, y, test_size=0.15, stratify = y, random_state = 42)
 # Tiền xử lý dữ liệu
 df = df[df['RestingBP'] > 0]
 df['Cholesterol'] = df['Cholesterol'].replace({0:np.nan})
@@ -129,7 +132,7 @@ df['ExerciseAngina'] = df['ExerciseAngina'].replace({'N': 0, 'Y': 1})
 
 # One-hot encoding
 encoded_df = pd.get_dummies(df, drop_first=True)
-
+# print(encoded_df['ST_Slope'])
 # Chia dữ liệu
 X = encoded_df.drop('HeartDisease', axis=1)
 y = encoded_df['HeartDisease']
@@ -144,7 +147,8 @@ X_test['Cholesterol'] = X_test['Cholesterol'].fillna(chol)
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
-
+X_train_scaled_ml = scaler.fit_transform(X_train_ml)
+X_test_scaled_ml = scaler.transform(X_test_ml)
 # Áp dụng PCA
 pca = PCA()
 pca.fit_transform(X_train);
@@ -243,27 +247,27 @@ async def predict_model(model_name: str = Form(...)):
             "classification_report": report
         }
     if model_name=="XGB":
-        xgb_model_path = os.path.join(MODEL_FOLDER, "xgb_grid_model.pkl")
+        #xgb_model_path = os.path.join(MODEL_FOLDER, "xgb_grid_model.pkl")
         
-        if not os.path.exists(xgb_model_path):
-            return {"error": f"Model file '{xgb_model_path}' not found!"}
+        #if not os.path.exists(xgb_model_path):
+         #   return {"error": f"Model file '{xgb_model_path}' not found!"}
 
         # Load mô hình từ file pickle
-        xgb_model = load(r"C:\Edisk\tailieusinhvien\hk5\data_mining\backend\models\xgb_grid_model.pkl")
+        xgb_model = load("/home/nguyen-minh-hieu/data_mining/Heart-Failure-Prediction/models/xgb_grid_model.pkl")
 
         # Dự đoán xác suất và nhãn
-        y_pred_prob_list = xgb_model.predict_proba(X_test)[:, 1]  # Lấy xác suất lớp 1
-        prediction_list = xgb_model.predict(X_test)
+        y_pred_prob_list = xgb_model.predict_proba(X_test_ml)[:, 1]  # Lấy xác suất lớp 1
+        prediction_list = xgb_model.predict(X_test_ml)
 
         # Tính toán các chỉ số đánh giá
       
-        accuracy = accuracy_score(y_test, prediction_list)
-        confusion = confusion_matrix(y_test, prediction_list).tolist()
-        report = classification_report(y_test, prediction_list, output_dict=True)
+        accuracy = accuracy_score(y_test_ml, prediction_list)
+        confusion = confusion_matrix(y_test_ml, prediction_list).tolist()
+        report = classification_report(y_test_ml, prediction_list, output_dict=True)
 
         # Vẽ ROC và Confusion Matrix
-        roc_buf = plot_roc_curve(y_test, y_pred_prob_list)
-        conf_buf = conf_matrix(y_test, prediction_list)
+        roc_buf = plot_roc_curve(y_test_ml, y_pred_prob_list)
+        conf_buf = conf_matrix(y_test_ml, prediction_list)
 
         roc_path = os.path.join(DATA_FOLDER, "roc_curve_XGB.png")
         conf_path = os.path.join(DATA_FOLDER, "confusion_matrix_XGB.png")

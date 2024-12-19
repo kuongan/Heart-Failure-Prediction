@@ -1,0 +1,11 @@
+fastapi
+torch
+pytorch_lightning
+joblib
+pydantic
+plotly 
+pandas
+scikit-learn=0.23.2
+seaborn
+python-multypart
+xgboost
