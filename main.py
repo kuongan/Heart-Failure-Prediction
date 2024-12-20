@@ -16,6 +16,7 @@ from torch.utils.data import Dataset,DataLoader
 import torch.optim as optim
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.utils import shuffle
+from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import QuantileTransformer
@@ -118,16 +119,15 @@ class Net(nn.Module):
 #xu ly du lieu
 
 df = pd.read_csv('/home/nguyen-minh-hieu/data_mining/Heart-Failure-Prediction/data/heart.csv', skipinitialspace=True)
-df_ml=df.copy()
-df_ml = pd.get_dummies(df_ml, drop_first=True)
-X = df_ml.drop(["HeartDisease"], axis=1)
-y = df_ml["HeartDisease"]
-X_train_ml, X_test_ml, y_train_ml, y_test_ml = train_test_split(X, y, test_size=0.15, stratify = y, random_state = 42)
+
 # Tiền xử lý dữ liệu
 df = df[df['RestingBP'] > 0]
 df['Cholesterol'] = df['Cholesterol'].replace({0:np.nan})
-df['Sex'] = df['Sex'].replace({'M': 0, 'F': 1})
-df['ExerciseAngina'] = df['ExerciseAngina'].replace({'N': 0, 'Y': 1})
+label_encoder = LabelEncoder()
+
+# Áp dụng LabelEncoder lên các cột cần mã hóa
+df['Sex'] = label_encoder.fit_transform(df['Sex'])
+df['ExerciseAngina'] = label_encoder.fit_transform(df['ExerciseAngina'])
 
 
 # One-hot encoding
@@ -147,8 +147,7 @@ X_test['Cholesterol'] = X_test['Cholesterol'].fillna(chol)
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
-X_train_scaled_ml = scaler.fit_transform(X_train_ml)
-X_test_scaled_ml = scaler.transform(X_test_ml)
+
 # Áp dụng PCA
 pca = PCA()
 pca.fit_transform(X_train);
@@ -256,18 +255,18 @@ async def predict_model(model_name: str = Form(...)):
         xgb_model = load("/home/nguyen-minh-hieu/data_mining/Heart-Failure-Prediction/models/xgb_grid_model.pkl")
 
         # Dự đoán xác suất và nhãn
-        y_pred_prob_list = xgb_model.predict_proba(X_test_ml)[:, 1]  # Lấy xác suất lớp 1
-        prediction_list = xgb_model.predict(X_test_ml)
+        y_pred_prob_list = xgb_model.predict_proba(X_test)[:, 1]  # Lấy xác suất lớp 1
+        prediction_list = xgb_model.predict(X_test)
 
         # Tính toán các chỉ số đánh giá
       
-        accuracy = accuracy_score(y_test_ml, prediction_list)
-        confusion = confusion_matrix(y_test_ml, prediction_list).tolist()
-        report = classification_report(y_test_ml, prediction_list, output_dict=True)
+        accuracy = accuracy_score(y_test, prediction_list)
+        confusion = confusion_matrix(y_test, prediction_list).tolist()
+        report = classification_report(y_test, prediction_list, output_dict=True)
 
         # Vẽ ROC và Confusion Matrix
-        roc_buf = plot_roc_curve(y_test_ml, y_pred_prob_list)
-        conf_buf = conf_matrix(y_test_ml, prediction_list)
+        roc_buf = plot_roc_curve(y_test, y_pred_prob_list)
+        conf_buf = conf_matrix(y_test, prediction_list)
 
         roc_path = os.path.join(DATA_FOLDER, "roc_curve_XGB.png")
         conf_path = os.path.join(DATA_FOLDER, "confusion_matrix_XGB.png")
