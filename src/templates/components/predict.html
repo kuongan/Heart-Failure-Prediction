@@ -1,0 +1,70 @@
+{% include 'components/topbar.html' %}
+
+<div class="container">
+    <h1 class="title">Predict</h1>
+    <form id="predictForm" class="form-container">
+        <!-- Row 1 -->
+        <div class="form-row">
+            <label>Age: <input type="number" name="Age" min="1" max="100" value="20"required></label>
+            <label>Sex: 
+                <select name="Sex">
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </label>
+            <label>Chest Pain Type:
+                <select name="ChestPainType">
+                    <option value="TA">Typical Angina</option>
+                    <option value="ATA">Atypical Angina</option>
+                    <option value="NAP">Non-Anginal Pain</option>
+                    <option value="ASY">Asymptomatic</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="form-row">
+            <label>Resting BP: <input type="number" name="RestingBP" min="50" max="200" value = "100" required></label>
+            <label>Cholesterol: <input type="number" name="Cholesterol" min="100" max="600" value = "200"required></label>
+            <label>Fasting BS:
+                <select name="FastingBS">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="form-row">
+            <label>Resting ECG:
+                <select name="RestingECG">
+                    <option value="Normal">Normal</option>
+                    <option value="ST">ST</option>
+                    <option value="LVH">LVH</option>
+                </select>
+            </label>
+            <label>Max HR: <input type="number" name="MaxHR" min="60" max="202" value = "100" required></label>
+            <label>Exercise Angina:
+                <select name="ExerciseAngina">
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="form-row">
+            <label>Oldpeak: <input type="number" step="0.1" name="Oldpeak" min="0" max="6" required></label>
+            <label>ST Slope:
+                <select name="ST_Slope">
+                    <option value="Up">Up</option>
+                    <option value="Flat">Flat</option>
+                    <option value="Down">Down</option>
+                </select>
+            </label>
+        </div>
+
+        <button type="button" class="predict-button" onclick="submitPredictForm()">Predict</button>
+    </form>
+    <h2 id="result" class="result"></h2>
+</div>

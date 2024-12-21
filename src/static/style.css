@@ -103,3 +103,63 @@ h1 {
     transform: translateY(-5px);
     filter: brightness(1.1);
 }
+
+/* Form Styles */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+label {
+    flex: 1;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+input, select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.predict-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.predict-button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    text-align: center;
+    color: #28a745;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
