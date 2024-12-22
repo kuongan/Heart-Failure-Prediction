@@ -1,0 +1,149 @@
+.data {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.section {
+    border: 2px solid #0066cc;
+    border-radius: 10px;
+    padding: 20px 20px; /* Đặt padding trên-dưới và trái-phải bằng nhau */
+    margin: 20px auto;
+    background-color: #73a4b8;
+    height: 310px;
+    width: 96%;
+    max-width: 1700px;
+    overflow: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px; /* Khoảng cách giữa các cột */
+    width: 100%;
+}
+
+.image-left, .image-right {
+    width: 1300px; /* Fix cứng chiều rộng */
+    height: 300px; /* Fix cứng chiều cao */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden; /* Ẩn phần ảnh vượt quá */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white; /* Thêm màu nền để dễ nhìn */
+}
+
+
+
+.image-center {
+    display: flex; /* Sử dụng Flexbox để căn giữa nội dung bên trong */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    width: 90%; /* Chiều rộng khung */
+    height: auto; /* Chiều cao tự động theo nội dung */
+    background-color: #fff; /* Màu nền */
+    border: 1px solid #ddd; /* Viền */
+    border-radius: 10px; /* Bo góc */
+    overflow: hidden; /* Ẩn phần ảnh vượt quá khung */
+    margin: 20px auto; /* Căn giữa khung */
+}
+
+.image-center img {
+    width: 100%; /* Đảm bảo ảnh lấp đầy chiều ngang */
+    height: auto; /* Giữ tỷ lệ ảnh */
+    object-fit: contain; /* Giữ tỷ lệ ảnh và vừa khung */
+    border-radius: 10px; /* Bo góc cho ảnh */
+}
+
+
+.feature-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Giữ tỷ lệ ảnh và scale để vừa khung */
+    display: block;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.modal.show {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease-out;
+}
+
+.modal-content.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.close {
+    position: fixed;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease, color 0.2s ease;
+}
+
+.close.show {
+    opacity: 1;
+}
+
+.close:hover {
+    color: #ddd;
+}
+
+.correlation-matrix {
+    display: flex; /* Sử dụng flexbox để căn giữa nội dung */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    width: 900px; /* Đặt chiều rộng cố định */
+    height: 650px; /* Đặt chiều cao cố định để tạo hình vuông */
+    background-color: #73a4b8; /* Màu nền xanh */
+    border: 2px solid #0066cc; /* Viền xanh đậm */
+    border-radius: 10px; /* Bo góc */
+    overflow: hidden; /* Ẩn phần ảnh vượt quá khung */
+    margin: 20px auto; /* Căn giữa khung */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+.correlation-matrix img {
+    width: 100%; /* Ảnh lấp đầy chiều ngang */
+    height: 100%; /* Ảnh lấp đầy chiều cao */
+    object-fit: contain; /* Giữ tỷ lệ ảnh và vừa khung */
+    border-radius: 10px; /* Bo góc cho ảnh */
+}
+
+.data-preprocessing {
+    height: 700px; /* Tăng chiều cao */
+}
