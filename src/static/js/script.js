@@ -25,6 +25,7 @@ async function navigateTo(section) {
 
                 // Reinitialize events for dynamically loaded content
                 initializeDynamicEvents();
+                initializeDynamicEvent();
             }
         } else {
             console.error(`Failed to load section: ${section}`);
@@ -219,8 +220,14 @@ function initializeDynamicEvent() {
     const modal = document.getElementById("image-modal");
     const modalImage = document.getElementById("modal-image");
     const closeModal = document.querySelector(".close");
+
     if (modal && modalImage && closeModal) {
-        // Gán sự kiện cho các phần tử nếu tồn tại
+        // Remove existing event listeners to prevent duplication
+        closeModal.removeEventListener("click", closeModalWithAnimation);
+        modal.removeEventListener("click", closeModalWithAnimation);
+        document.removeEventListener("keydown", closeModalWithAnimation);
+
+        // Add event listeners for feature images
         document.querySelectorAll(".feature-image").forEach((img) => {
             img.addEventListener("click", function () {
                 modal.style.display = "flex";
@@ -234,6 +241,7 @@ function initializeDynamicEvent() {
             });
         });
 
+        // Add event listeners for closing the modal
         closeModal.addEventListener("click", (e) => {
             e.stopPropagation();
             closeModalWithAnimation();
@@ -250,13 +258,14 @@ function initializeDynamicEvent() {
                 closeModalWithAnimation();
             }
         });
-    } 
+    } else {
+        console.warn("Modal elements not found in DOM.");
+    }
 }
-
-
 
 // Gọi lại hàm sau khi nội dung thay đổi
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM fully loaded and parsed");
-    initializeDynamicEvent();
+        // Reinitialize events for dynamically loaded content
+        initializeDynamicEvent(); // Fix added here
+    
 });
