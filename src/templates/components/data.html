@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Failure Prediction</title>
+    <link rel="stylesheet" href="/static/data_style.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/js/data_script.js" defer></script>
+    <script src="/static/js/script.js" defer></script>
+</head>
+
+<body>
+    <!-- Header -->
+    {% include 'components/topbar.html' %}
+
+    <div class="data">
+        <!-- Numerical Features Section -->
+        <h2>Numerical Features</h2>
+        <div class="section">
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/Age-1.png" alt="Numerical Feature 1">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/Age-2.png" alt="Numerical Feature 2">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/R-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/R-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/C-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/C-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/O-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/O-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorical Features Section -->
+        <h2>Categorical Features</h2>
+        <div class="section">
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/S-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/S-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/CT-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/CT-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/F-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/F-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/ECG-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/ECG-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/Exer-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/Exer-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/ST-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/ST-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Outlier Section -->
+        <h2>Outlier</h2>
+        <div class="section">
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/Out-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/Out-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Correlation Features Section -->
+        <h2>Correlation Matrix</h2>
+        <div class="correlation-matrix">
+            <img class="feature-image" src="/static/images/Corr-1.png" alt="Correlation Matrix">
+        </div>
+
+         <!-- Data Pre-processing -->
+        <h2>Data Pre-processing</h2>
+        <div class="section data-preprocessing">
+            <h3>Handling Outliers</h3>
+            <div class="image-row">
+                <div class="image-left">
+                    <img class="feature-image" src="/static/images/Handl-Out-1.png" alt="Numerical Feature 4">
+                </div>
+                <div class="image-right">
+                    <img class="feature-image" src="/static/images/Handl-Out-2.png" alt="Numerical Feature 5">
+                </div>
+            </div>
+            
+            <h3>Standard Scaling</h3>
+            <div class="image-center">
+                <img class="feature-image" src="/static/images/Standard.png" alt="Correlation Matrix">
+            </div>
+        </div>
+
+        <div id="image-modal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="modal-image" alt="Zoomed Image">
+        </div>
+    </div>
+</body>
+
+</html>
