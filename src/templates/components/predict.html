@@ -1,7 +1,9 @@
-{% include 'components/topbar.html' %}
+{% extends "index.html" %}
 
-<div class="container">
-    <h1 class="title">Predict</h1>
+{% block title %}Predict{% endblock %}
+
+{% block content %}
+<h1>Predict</h1>
     <form id="predictForm" class="form-container">
         <!-- Row 1 -->
         <div class="form-row">
@@ -68,3 +70,4 @@
     </form>
     <h2 id="result" class="result"></h2>
 </div>
+{% endblock %}

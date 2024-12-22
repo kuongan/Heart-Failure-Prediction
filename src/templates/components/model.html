@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+{% block content %}
+<h1>Train Model</h1>
+<div class="content">
+    <!-- Left Section: Parameters -->
+    <div class="left-section">
+        <h3>Choose Model:</h3>
+        <select id="model-select">
+            <option value="xgboost">XGBoost</option>
+            <option value="neural_network">Neural Network</option>
+        </select>
+        
+
+        <h3>Choose Parameters</h3>
+        <div id="xgboost-params" class="param-fields">
+            <label for="n_estimators">n_estimators:</label>
+            <input type="number" id="n_estimators" value="100" min="50" max="1000" step="10">
+
+            <label for="learning_rate">learning_rate:</label>
+            <input type="number" id="learning_rate" value="0.1" step="0.01" min="0.01" max="1.0">
+
+            <label for="max_depth">max_depth:</label>
+            <input type="number" id="max_depth" value="3" min="1" max="20">
+
+            <label for="subsample">subsample:</label>
+            <input type="number" id="subsample" value="1.0" step="0.1" min="0.1" max="1.0">
+        </div>
+        <div id="neural-network-params" class="param-fields" style="display:none;">
+            <label for="epochs">Epochs:</label>
+            <input type="number" id="epochs" value="10" min="1" max="100">
+            <label for="learning_rate_nn">Learning Rate:</label>
+            <input type="number" id="learning_rate_nn" value="0.01" step="0.001" min="0.001" max="1.0">
+            <label for = "num_layers">Num Layers:</label>
+            <input type="number" id="num_layers" value="1" min="1" max="5">
+            <label for = "num_node">Num node per layer:</label>
+            <input type="number" id="num_node" value="32" min="1" max="1000">
+        </div>
+        <button class="train-button" onclick="trainModel()">Train</button>
+    </div>
+
+    <!-- Right Section: Results -->
+    <div class="right-section">
+        <h3>Results</h3>
+        <div class="result-grid">
+            <div class="result-box" id="classification-box">
+                <h4>Classification Report</h4>
+                <div class="image-container">
+                    <img id="classification-report" src="/static/images/classification_report.jpg" alt="Default Classification Report">
+                    <button class="zoom-icon" onclick="zoomImage('classification-report')">🔍</button>
+                </div>
+            </div>
+            <div class="result-box" id="confusion-box">
+                <h4>Confusion Matrix</h4>
+                <div class="image-container">
+                    <img id="confusion-matrix" src="/static/images/confusion_matrix.jpg" alt="Confusion Matrix">
+                    <button class="zoom-icon" onclick="zoomImage('confusion-matrix')">🔍</button>
+                </div>
+            </div>
+            <div class="result-box" id="roc-box">
+                <h4>ROC AUC</h4>
+                <div class="image-container">
+                    <img id="roc-auc" src="/static/images/roc_auc.jpg" alt="ROC AUC">
+                    <button class="zoom-icon" onclick="zoomImage('roc-auc')">🔍</button>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+    
+</div>
+{% endblock %}

@@ -4,7 +4,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from starlette.requests import Request
 from pathlib import Path
-from src.api_router.model import router 
+from src.api_router.predict import router 
+from src.api_router.train import router as router_train
 # Define the base directory for the app folder
 #BASE_DIR = Path(__file__).resolve().parent
 app = FastAPI()
@@ -32,3 +33,4 @@ async def read_predict(request: Request):
     return templates.TemplateResponse("components/predict.html", {"request": request})
 
 app.include_router(router)
+app.include_router(router_train)
