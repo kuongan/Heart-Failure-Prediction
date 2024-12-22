@@ -52,16 +52,15 @@ body {
 
 /* Main Content */
 .container {
-    margin: 30px auto;
+    margin: 10px auto;
     padding: 20px;
-    max-width: 900px;
 }
 
 h1 {
     font-size: 2.5rem;
     font-weight: bold;
     color: #1e293b;
-    margin-bottom: 30px;
+    margin: 0px;
 }
 
 /* Button Container */
@@ -69,6 +68,7 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 40px;
+    padding: 30px;
 }
 
 .section-button {
@@ -105,61 +105,244 @@ h1 {
 }
 
 /* Form Styles */
+
 .form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-row {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    margin-bottom: 20px;
 }
 
 label {
     flex: 1;
+    margin-right: 10px;
     font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
     color: #555;
 }
 
-input, select {
+label:last-child {
+    margin-right: 0;
+}
+
+input,
+select {
+    width: 100%;
     padding: 8px;
-    font-size: 14px;
+    margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    font-size: 14px;
 }
 
-input:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.predict-button {
+button.predict-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
     background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
     transition: background-color 0.3s ease;
-    text-align: center;
 }
 
-.predict-button:hover {
+button.predict-button:hover {
     background-color: #0056b3;
 }
 
 .result {
     text-align: center;
-    color: #28a745;
-    margin-top: 15px;
-    font-size: 18px;
+    font-size: 24px;
+    margin-top: 20px;
+    color: #007bff;
+}
+
+/* Model */
+/* Content chia layout */
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+/* Phần bên trái */
+.left-section {
+    flex: 0 0 25%; /* Chiếm 30% chiều rộng */
+    padding: 20px;
+    background-color: #e3f2fd;
+    border-radius: 8px;
+}
+
+/* Input và nhãn */
+.left-section label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: bold;
+}
+
+.left-section input,
+.left-section select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.train-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.train-button:hover {
+    background-color: #0056b3;
+}
+/* Right Section */
+.right-section {
+    flex: 0 0 70%; /* Chiếm 70% chiều rộng */
+    padding: 20px;
+    background-color: #f1f3f5;
+    border-radius: 8px;
+}
+
+/* Grid Layout for Results */
+.result-grid {
+    display: grid;
+    grid-template-areas: 
+        "classification confusion"
+        "roc confusion";
+    grid-template-columns: 2fr 2fr; /* Cột trái rộng hơn */
+    grid-template-rows: 0.75fr 1.5fr; /* Hai hàng chiều cao bằng nhau */
+    gap: 10px; /* Khoảng cách giữa các ô */
+}
+
+.result-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px; /* Thêm padding cho nội dung */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Đảm bảo chữ nằm ở trên */
+    align-items: center;
+    height: 250px; /* Đặt chiều cao cố định */
+    overflow: hidden; /* Ẩn phần thừa nếu có */
+    position: relative; /* Quan trọng để căn chỉnh nút phóng to */
+}
+
+#classification-box {
+    grid-area: classification;
+}
+
+#confusion-box {
+    grid-area: confusion;
+    height: 600px;
+}
+
+#roc-box {
+    grid-area: roc;
+    height: 320px;
+}
+
+.result-box h4 {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1; /* Đảm bảo chữ nằm trên nút phóng to */
+}
+
+.result-box img {
+    max-width: 85%; /* Giới hạn chiều rộng ảnh */
+    max-height: 80%;
+    object-fit: contain; 
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Nút phóng to */
+/* Container bao quanh ảnh và biểu tượng */
+.image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Biểu tượng phóng to */
+.zoom-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 2; /* Đảm bảo nút nằm trên ảnh */
+}
+
+.zoom-icon:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Overlay để hiển thị ảnh phóng to */
+.image-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.image-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+}
+
+.image-overlay .close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
 }

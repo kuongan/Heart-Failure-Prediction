@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Failure Prediction</title>
+    <title>{% block title %}Heart Failure Prediction{% endblock %}</title>
     <link rel="stylesheet" href="/static/style.css">
     <script src="/static/js/script.js" defer></script>
-    
 </head>
 <body>
     <!-- Header -->
     {% include 'components/topbar.html' %}
+    
     <!-- Main Content -->
     <div id="content" class="container">
+        {% block content %}
         <h1>Heart Failure Prediction</h1>
         <div class="button-container">
             <button class="section-button" onclick="navigateTo('data')">Data</button>
             <button class="section-button" onclick="navigateTo('model')">Train model</button>
             <button class="section-button" onclick="navigateTo('predict')">Predict</button>
         </div>
+        {% endblock %}
     </div>
 </body>
 </html>
