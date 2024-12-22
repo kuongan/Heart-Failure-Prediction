@@ -29,7 +29,8 @@
 }
 
 .image-left, .image-right {
-    width: 1300px; /* Fix cứng chiều rộng */
+    width: 100%;
+    max-width: 1300px;
     height: 300px; /* Fix cứng chiều cao */
     border: 1px solid #ddd;
     border-radius: 8px;

@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Failure Prediction</title>
-    <link rel="stylesheet" href="/static/data_style.css">
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="/static/js/data_script.js" defer></script>
-    <script src="/static/js/script.js" defer></script>
-</head>
-
-<body>
-    <!-- Header -->
-    {% include 'components/topbar.html' %}
-
+{% block content %}
+<div class="content">
     <div class="data">
         <!-- Numerical Features Section -->
         <h2>Numerical Features</h2>
@@ -149,6 +136,5 @@
             <img class="modal-content" id="modal-image" alt="Zoomed Image">
         </div>
     </div>
-</body>
-
-</html>
+</div>
+{% endblock %}

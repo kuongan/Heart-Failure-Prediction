@@ -199,3 +199,64 @@ function closeZoom() {
         overlay.style.display = "none";
     }
 }
+function closeModalWithAnimation() {
+    const modal = document.getElementById("image-modal");
+    const modalImage = document.getElementById("modal-image");
+    const closeModal = document.querySelector(".close");
+
+    // Ẩn modal và các thành phần bên trong
+    modal.classList.remove("show");
+    modalImage.classList.remove("show");
+    closeModal.classList.remove("show");
+
+    // Đợi animation kết thúc rồi mới ẩn modal
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 300); // Thời gian này phải khớp với CSS transition
+}
+
+function initializeDynamicEvent() {
+    const modal = document.getElementById("image-modal");
+    const modalImage = document.getElementById("modal-image");
+    const closeModal = document.querySelector(".close");
+    if (modal && modalImage && closeModal) {
+        // Gán sự kiện cho các phần tử nếu tồn tại
+        document.querySelectorAll(".feature-image").forEach((img) => {
+            img.addEventListener("click", function () {
+                modal.style.display = "flex";
+                modalImage.src = this.src;
+
+                setTimeout(() => {
+                    modal.classList.add("show");
+                    modalImage.classList.add("show");
+                    closeModal.classList.add("show");
+                }, 10);
+            });
+        });
+
+        closeModal.addEventListener("click", (e) => {
+            e.stopPropagation();
+            closeModalWithAnimation();
+        });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModalWithAnimation();
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.style.display === "flex") {
+                closeModalWithAnimation();
+            }
+        });
+    } 
+}
+
+
+
+// Gọi lại hàm sau khi nội dung thay đổi
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM fully loaded and parsed");
+    initializeDynamicEvent();
+});
