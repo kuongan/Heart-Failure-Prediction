@@ -148,25 +148,51 @@ def prepare_data():
     y = encoded_df['HeartDisease']
     
     # Train-test split
+    X_train, X_test_DL, y_train, y_test_DL = train_test_split(
+        X, y, test_size=0.3, random_state=SEED, stratify=y
+    )
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.15, random_state=SEED, stratify=y
+        X, y, test_size=0.2, random_state=SEED, stratify=y
     )
     
     # Handle missing values
     X_train['Cholesterol'].fillna(240, inplace=True)
     X_test['Cholesterol'].fillna(240, inplace=True)
+    X_test_DL['Cholesterol'].fillna(240, inplace=True)
     
     # Scale features
     scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
-    
-    # Create validation split
-    X_train, X_valid, y_train, y_valid = train_test_split(
-        X_train, y_train, test_size=0.2, stratify=y_train, random_state=SEED
+    X_train = pd.DataFrame(
+        scaler.fit_transform(X_train),
+        columns=X_train.columns,
+        index=X_train.index
+    )
+    X_test = pd.DataFrame(
+        scaler.transform(X_test),
+        columns=X_test.columns,
+        index=X_test.index
+    )
+    X_test_DL = pd.DataFrame(
+        scaler.transform(X_test_DL),
+        columns=X_test_DL.columns,
+        index=X_test_DL.index
     )
     
-    return X_train, X_valid, X_test, y_train, y_valid, y_test
+    # Create validation split
+    X_train_arr, X_valid, y_train_arr, y_valid = train_test_split(
+        X_train.values, y_train.values,
+        test_size=0.125,
+        stratify=y_train,
+        random_state=SEED
+    )
+    
+    # Convert to numpy arrays for PyTorch
+    X_test_DL = X_test_DL.values
+    y_test_DL = y_test_DL.values
+    
+    return X_train_arr, X_valid, X_test, y_train_arr, y_valid, y_test, X_test_DL, y_test_DL
+
+
 
 # API Endpoints
 @app.post("/modeling/")
@@ -180,10 +206,10 @@ async def predict_model(model_name: str = Form(...)):
     Returns:
         dict: Model evaluation metrics and plots
     """
-    X_train, X_valid, X_test, y_train, y_valid, y_test = prepare_data()
+    X_train, X_valid, X_test, y_train, y_valid, y_test ,X_test_DL,y_test_DL= prepare_data()
     
     if model_name == 'DL':
-        return await train_evaluate_dl(X_train, X_valid, X_test, y_train, y_valid, y_test)
+        return await train_evaluate_dl(X_train, X_valid, X_test_DL, y_train, y_valid, y_test_DL)
     elif model_name == 'XGB':
         return await train_evaluate_xgb(X_train, X_test, y_train, y_test)
     else:
@@ -194,17 +220,26 @@ async def predict_model(model_name: str = Form(...)):
 
 async def train_evaluate_dl(X_train, X_valid, X_test, y_train, y_valid, y_test):
     """Train and evaluate deep learning model."""
-    # Create data loaders
+    # Create data loaders with numpy arrays
     train_loader = DataLoader(
-        CustomDataset(torch.FloatTensor(X_train), torch.FloatTensor(y_train.values)),
+        CustomDataset(
+            torch.FloatTensor(X_train),
+            torch.FloatTensor(y_train)
+        ),
         batch_size=16
     )
     valid_loader = DataLoader(
-        CustomDataset(torch.FloatTensor(X_valid), torch.FloatTensor(y_valid.values)),
+        CustomDataset(
+            torch.FloatTensor(X_valid),
+            torch.FloatTensor(y_valid)
+        ),
         batch_size=1
     )
     test_loader = DataLoader(
-        CustomDataset(torch.FloatTensor(X_test), torch.FloatTensor(y_test.values)),
+        CustomDataset(
+            torch.FloatTensor(X_test),
+            torch.FloatTensor(y_test)
+        ),
         batch_size=1
     )
     
