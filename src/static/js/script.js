@@ -51,20 +51,20 @@ async function submitPredictForm() {
         alert("Age must be between 1 and 100.");
         return;
     }
-    if (restingBP < 50 || restingBP > 200) {
-        alert("Resting BP must be between 50 and 200.");
+    if (restingBP < 0 || restingBP > 200) {
+        alert("Resting BP must be between 0 and 200.");
         return;
     }
-    if (cholesterol < 100 || cholesterol > 600) {
-        alert("Cholesterol must be between 100 and 600.");
+    if (cholesterol < 1 || cholesterol > 600) {
+        alert("Cholesterol must be between 1 and 600.");
         return;
     }
     if (maxHR < 60 || maxHR > 202) {
         alert("Max HR must be between 60 and 202.");
         return;
     }
-    if (oldpeak < 0 || oldpeak > 6) {
-        alert("Oldpeak must be between 0 and 6.");
+    if (oldpeak < -3.6 || oldpeak > 6.2) {
+        alert("Oldpeak must be between -2.6 and 6.22");
         return;
     }
 

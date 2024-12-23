@@ -26,8 +26,8 @@
 
         <!-- Row 2 -->
         <div class="form-row">
-            <label>Resting BP: <input type="number" name="RestingBP" min="50" max="200" value = "100" required></label>
-            <label>Cholesterol: <input type="number" name="Cholesterol" min="100" max="600" value = "200"required></label>
+            <label>Resting BP: <input type="number" name="RestingBP" min="0" max="200" value = "100" required></label>
+            <label>Cholesterol: <input type="number" name="Cholesterol" min="0" max="600" value = "223"required></label>
             <label>Fasting BS:
                 <select name="FastingBS">
                     <option value="0">0</option>
@@ -56,7 +56,7 @@
 
         <!-- Row 4 -->
         <div class="form-row">
-            <label>Oldpeak: <input type="number" step="0.1" name="Oldpeak" min="0" max="6" required></label>
+            <label>Oldpeak: <input type="number" step="0.1" name="Oldpeak" value = "3" min="-2,6" max="6" required></label>
             <label>ST Slope:
                 <select name="ST_Slope">
                     <option value="Up">Up</option>
